@@ -23,10 +23,12 @@ router.route('/seats/').post((req, res) => {
     client: req.body.client,
     email: req.body.email,
   }
-  db.seats.push(obj);
-  return res.json({
-    message: 'ok'
-  });
+  if (db.seats.some(chosenSeat => (chosenSeat.day == req.body.day && chosenSeat.seat == req.body.seat))) {
+    return res.status(404).json({ message: 'This slot is aleady taken' });
+  } else {
+    db.seats.push(obj);
+    return res.json(db.seats);
+  }
 });
 
 router.route('/seats/:id').put((req, res) => {
