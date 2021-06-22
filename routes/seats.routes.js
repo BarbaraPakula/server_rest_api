@@ -27,6 +27,7 @@ router.route('/seats/').post((req, res) => {
     return res.status(404).json({ message: 'This slot is aleady taken' });
   } else {
     db.seats.push(obj);
+    req.io.emit('seatsUpdated', db.seats)
     return res.json(db.seats);
   }
 });

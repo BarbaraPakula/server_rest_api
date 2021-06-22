@@ -8,21 +8,18 @@ import './SeatChooser.scss';
 class SeatChooser extends React.Component {
 
   componentDidMount() {
-    const { loadSeats } = this.props;
+    const { loadSeats, loadSeatsData } = this.props;
+    this.socket = io.connect((process.env.NODE_ENV === 'production') ? '/' : 'http://localhost:8000');
+    this.socket.on('seatsUpdated', seats => loadSeatsData(seats));
     loadSeats();
-    this.reloadSeats = setInterval(() => loadSeats(), 120000);
-    this.socket = io.connect('http://localhost:8000/' || process.env.NODE_ENV);
+  }
 
-  }
-  componentWillUnmount() {
-    clearInterval(this.reloadSeats);
-  }
   isTaken = (seatId) => {
     const { seats, chosenDay } = this.props;
 
     return (seats.some(item => (item.seat === seatId && item.day === chosenDay)));
   }
-
+  
   prepareSeat = (seatId) => {
     const { chosenSeat, updateSeat } = this.props;
     const { isTaken } = this;
