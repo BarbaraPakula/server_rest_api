@@ -4,6 +4,7 @@ const concertsRoutes = require('./routes/concerts.routes');
 const seatsRoutes = require('./routes/seats.routes');
 var cors = require('cors');
 const path = require('path');
+const socket = require('socket.io')
 
 const app = express();
 app.use(express.json());
@@ -11,6 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors())
 
 app.use(express.static(path.join(__dirname, '/client/build')));
+
 
 
 app.use('/api', testimonialsRoutes);
@@ -28,6 +30,12 @@ app.use((req, res) => {
   });
 })
 
-app.listen(process.env.PORT || 8000, () => {
+const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running on port: 8000');
 });
+
+const io = socket(server, { cors: { origin: '*' } });
+
+io.on('connection', socket => {
+  console.log('New socket - its id: ', socket.id);
+})
