@@ -50,7 +50,8 @@ const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running on port: 8000');
 });
 
-const io = socket(server);
+const io = socket(server, { cors: { origin: '*' } });
+
 
 io.on('connection', (socket) => {
   console.log('New socket!', socket.id);
