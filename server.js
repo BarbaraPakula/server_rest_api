@@ -37,14 +37,13 @@ app.use((req, res) => {
 });
 
 //connects our beckend code with the database
-mongoose.connect('mongodb://localhost:27017/NewWaveDB', {  useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://barbara-pakula:Tokio2020@cluster0.q0xoi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {  useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
 db.once('open', () => {
   console.log('Connected to the database');
 });
 db.on('error', err => console.log('Error ' + err));
-
 
 const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running on port: 8000');

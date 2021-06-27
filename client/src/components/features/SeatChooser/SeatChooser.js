@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button, Progress, Alert } from 'reactstrap';
 import io from 'socket.io-client';
-
-
 import './SeatChooser.scss';
 
 class SeatChooser extends React.Component {
@@ -32,7 +30,6 @@ class SeatChooser extends React.Component {
   render() {
 
     const { prepareSeat } = this;
-    // const { requests } = this.props;
     const { requests, seats, chosenDay } = this.props;
 
 
