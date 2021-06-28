@@ -9,7 +9,4 @@ router.route('/seats').post(SeatController.post);
 router.route('/seats/:id').delete(SeatController.delete);
 router.route('/seats/:id').put(SeatController.put);
 
-
-
 module.exports = router;
-
