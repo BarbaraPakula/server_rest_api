@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "server.js",
   "license": "MIT",
+  "engines": {
+    "node": "v14.17.1"
+  },
   "scripts": {
     "start": "npx nodemon server.js",
     "build": "cd client && npm install && npm build"
