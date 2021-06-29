@@ -6,11 +6,11 @@ import './SeatChooser.scss';
 class SeatChooser extends React.Component {
   componentDidMount() {
     const { loadSeats, loadSeatsData } = this.props;
+    loadSeats();
     this.socket = io.connect(
       process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:8000'
     );
     this.socket.on('seatsUpdated', (seats) => loadSeatsData(seats));
-    loadSeats();
   }
 
   isTaken = (seatId) => {

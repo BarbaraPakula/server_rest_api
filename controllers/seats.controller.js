@@ -12,9 +12,9 @@ exports.getRandom = async (req, res) => {
   try {
     const count = await Seat.countDocuments();
     const rand = Math.floor(Math.random() * count);
-    const t = await Seat.findOne().skip(rand);
-    if (!t) res.status(404).json({ message: 'Not found' });
-    else res.json(t);
+    const seat = await Seat.findOne().skip(rand);
+    if (!seat) res.status(404).json({ message: 'Not found' });
+    else res.json(seat);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -22,8 +22,8 @@ exports.getRandom = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const s = await Seat.findById(req.params.id);
-    if (!s) res.status(404).json({ message: 'Not found' });
+    const seat = await Seat.findById(req.params.id);
+    if (!seat) res.status(404).json({ message: 'Not found' });
     else res.json(s);
   } catch (err) {
     res.status(500).json({ message: err });
@@ -35,6 +35,7 @@ exports.post = async (req, res) => {
   try {
     const newSeat = new Seat({ day, seat, client, email });
     await newSeat.save();
+    req.io.emit('seatsUpdated', (await Seat.find()))
     res.json({ message: 'OK' });
   } catch (err) {
     res.status(500).json({ message: err });
@@ -44,13 +45,13 @@ exports.post = async (req, res) => {
 exports.put = async (req, res) => {
   const { day, seat, client, email } = req.body;
   try {
-    const dep = await Seat.findById(req.params.id);
-    if (dep) {
-      dep.day = day;
-      dep.seat = seat;
-      dep.client = client;
-      dep.email = email;
-      await dep.save();
+    const seat = await Seat.findById(req.params.id);
+    if (seat) {
+      seat.day = day;
+      seat.seat = seat;
+      seat.client = client;
+      seat.email = email;
+      await seat.save();
       res.json();
     } else res.status(404).json({ message: 'Not found...' });
   } catch (err) {
@@ -60,10 +61,10 @@ exports.put = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const s = await Seat.findById(req.params.id);
-    if (s) {
-      await s.remove();
-      res.json(s);
+    const deletedSeat = await Seat.findById(req.params.id);
+    if (deletedSeat) {
+      await deletedSeat.remove();
+      res.json(deletedSeat);
     } else res.status(404).json({ message: 'Not found...' });
   } catch (err) {
     res.status(500).json({ message: err });

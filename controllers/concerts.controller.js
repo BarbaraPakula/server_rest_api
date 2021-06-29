@@ -12,9 +12,9 @@ exports.getRandom = async (req, res) => {
   try {
     const count = await Concert.countDocuments();
     const rand = Math.floor(Math.random() * count);
-    const t = await Concert.findOne().skip(rand);
-    if (!t) res.status(404).json({ message: 'Not found' });
-    else res.json(t);
+    const concert = await Concert.findOne().skip(rand);
+    if (!concert) res.status(404).json({ message: 'Not found' });
+    else res.json(concert);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -22,9 +22,9 @@ exports.getRandom = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const con = await Concert.findById(req.params.id);
-    if (!con) res.status(404).json({ message: 'Not found' });
-    else res.json(con);
+    const concert = await Concert.findById(req.params.id);
+    if (!concert) res.status(404).json({ message: 'Not found' });
+    else res.json(concert);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -44,15 +44,15 @@ exports.post = async (req, res) => {
 exports.put = async (req, res) => {
   const { performer, genre, price, day, image } = req.body;
   try {
-    const dep = await Concert.findById(req.params.id);
-    if (dep) {
-      dep.performer = performer;
-      dep.genre = genre;
-      dep.price = price;
-      dep.day = day;
-      dep.image = image;
-      await dep.save();
-      res.json(dep);
+    const concert = await Concert.findById(req.params.id);
+    if (concert) {
+      concert.performer = performer;
+      concert.genre = genre;
+      concert.price = price;
+      concert.day = day;
+      concert.image = image;
+      await concert.save();
+      res.json(concert);
     } else res.status(404).json({ message: 'Not found...' });
   } catch (err) {
     res.status(500).json({ message: err });
@@ -61,10 +61,10 @@ exports.put = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const con = await Concert.findById(req.params.id);
-    if (con) {
-      await con.remove();
-      res.json(con);
+    const deletedConcert = await Concert.findById(req.params.id);
+    if (deletedConcert) {
+      await deletedConcert.remove();
+      res.json(deletedConcert);
     } else res.status(404).json({ message: 'Not found...' });
   } catch (err) {
     res.status(500).json({ message: err });
