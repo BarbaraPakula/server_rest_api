@@ -51,8 +51,4 @@ describe('Workshop', () => {
       expect(err).to.not.exist;
     });
   });
-
-  after(async () => {
-    await Workshop.deleteMany();
-  });
 });
