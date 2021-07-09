@@ -1,8 +1,23 @@
 const Concert = require('../models/concert.model');
+const Seat = require('../models/seat.model');
+const Workshop = require('../models/workshop.model');
+
 
 exports.getAll = async (req, res) => {
   try {
-    res.json(await Concert.find());
+    const concerts = await Concert.find();
+    const workshops = await Workshop.find();
+    const tickets = await Seat.find();
+
+    const allConcerts = [];
+    for(let con of concerts){
+      const result = workshops.filter(el => el.concertId == con._id);
+      const resultTickets = tickets.filter(el => el.day == con.day);
+      const freeTickets = 50 - resultTickets.length;
+      const output = {concert: con, freeTickets: freeTickets, workshops: result};
+      allConcerts.push(output);
+    }
+    res.json(allConcerts);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -25,7 +40,10 @@ exports.getById = async (req, res) => {
     const concert = await Concert.findById(req.params.id);
     if (!concert) res.status(404).json({ message: 'Not found' });
     else res.json(concert);
-  } catch (err) {
+  }
+
+  catch (err)
+  {
     res.status(500).json({ message: err });
   }
 };
