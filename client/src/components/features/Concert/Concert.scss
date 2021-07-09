@@ -1,6 +1,5 @@
 @import '../../../styles/settings.scss';
 
-
 .concert {
   position: relative;
   overflow: hidden;
@@ -15,12 +14,12 @@
     &__img {
       width: 100%;
       height: 100%;
+      -o-object-fit: cover;
       object-fit: cover;
-      transition: .5s;
+      transition: 0.5s;
       z-index: 2;
       position: relative;
     }
-  
   }
 
   &__info {
@@ -32,6 +31,7 @@
       top: 0;
       left: 0;
       -webkit-filter: grayscale(0.5) blur(2px);
+              filter: grayscale(0.5) blur(2px);
     }
 
     &__performer {
@@ -52,17 +52,23 @@
       bottom: 1rem;
       left: 1.5rem;
     }
-  
+
+    &__tickets {
+      opacity: 0.8;
+      font-size: 0.9rem;
+      position: absolute;
+      bottom: 3rem;
+      left: 1.5rem;
+    }
   }
 
   &:nth-of-type(2n) .row {
-
     color: $color-text-bright;
-  
+
     > div:first-child {
       order: 2;
     }
-  
+
     > div:second-child {
       order: 1;
     }
@@ -74,7 +80,6 @@
 }
 
 @media (max-width: 768px) {
-
   .concert__info__performer {
     font-size: 1.8rem;
     margin: 0.5rem;
@@ -83,5 +88,12 @@
   .concert__info__genre {
     font-size: 1.5rem;
     opacity: 0.7;
+  }
+  .concert__info__tickets {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    position: absolute;
+    bottom: 4rem;
+    left: 1.8rem;
   }
 }
