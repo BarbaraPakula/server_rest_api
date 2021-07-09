@@ -41,7 +41,6 @@ mongoose.connect('mongodb+srv://barbara-pakula:Tokio2020@cluster0.q0xoi.mongodb.
 // const dbURI = process.env.NODE_ENV === 'production'
   // ? 'mongodb+srv://barbara-pakula:Tokio2020@cluster0.q0xoi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
   // : 'mongodb://localhost:27017/NewWaveDB';
-
 // mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
