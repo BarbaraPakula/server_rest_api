@@ -9,8 +9,7 @@
   "scripts": {
     "start": "npx nodemon server.js",
     "build": "cd client && npm install && npm run build",
-    "test": "mocha --watch \"./{,!(node_modules|client)/**/}*.test.js\"",
-    "test:watch": "onchange \"./**/*.js\" -i -k -- yarn test"
+    "test": "mocha --watch \"./{,!(node_modules|client)/**/}*.test.js\""
   },
   "dependencies": {
     "chai": "^4.3.4",
