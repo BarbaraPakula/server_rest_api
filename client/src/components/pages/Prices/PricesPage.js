@@ -1,15 +1,11 @@
 import React from 'react';
 import { Alert, Container } from 'reactstrap';
-import io from 'socket.io-client';
-// import './PricesPage.scss';
 
 class Prices extends React.Component {
 
   componentDidMount() {
-    const { loadConcertsReq, loadConcertsData } = this.props;
+    const { loadConcertsReq } = this.props;
     loadConcertsReq();
-    this.socket = io.connect((process.env.NODE_ENV === 'production') ? '/' : 'http://localhost:8000');
-    this.socket.on('concertsUpdated', concerts => loadConcertsData(concerts));
   }
 
   render() {
@@ -33,7 +29,7 @@ class Prices extends React.Component {
             <p>Price: {item.concert.price}$</p>
             <p className="concerts__workshops">Workshops:
             {item.workshops.map(el => (
-              <span key={el._id} className="spanFirst"> "{el.name}"<span className="spanSecond">,</span></span>
+              <span key={el._id}> "{el.name}"<span className="spanSecond">,</span></span>
             ))}
             </p>
           </div>
