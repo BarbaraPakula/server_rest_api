@@ -37,7 +37,12 @@ app.use((req, res) => {
 });
 
 //connects our beckend code with the database
-mongoose.connect('mongodb+srv://barbara-pakula:Tokio2020@cluster0.q0xoi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {  useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect('mongodb+srv://barbara-pakula:Tokio2020@cluster0.q0xoi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {  useNewUrlParser: true, useUnifiedTopology: true });
+const dbURI = process.env.NODE_ENV === 'production'
+  ? 'mongodb+srv://barbara-pakula:Tokio2020@cluster0.q0xoi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+  : 'mongodb://localhost:27017/NewWaveDB';
+
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
 db.once('open', () => {
@@ -55,3 +60,5 @@ const io = socket(server, { cors: { origin: '*' } });
 io.on('connection', (socket) => {
   console.log('New socket!', socket.id);
 });
+
+module.exports = server;
