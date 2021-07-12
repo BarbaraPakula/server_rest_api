@@ -55,9 +55,8 @@ exports.post = async (req, res) => {
     let cleanPerform = sanitize(req.body.performer);
     let cleanGenre = sanitize(req.body.genre);
     let cleanImage = sanitize(req.body.image);
-    const { performer, genre, price, day, image } = req.body;
-    const newConcert = new Concert({ performer: cleanPerform, genre: cleanGenre, price: req.body.price, day: day, image: cleanImage });
-    // const newConcert = new Concert({ performer, genre, price, day, image });
+    const { price, day} = req.body;
+    const newConcert = new Concert({ performer: cleanPerform, genre: cleanGenre, price, day, image: cleanImage });
     await newConcert.save();
     res.json({ message: 'OK' });
   } catch (err) {

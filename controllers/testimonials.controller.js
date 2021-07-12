@@ -12,9 +12,9 @@ exports.getRandom = async (req, res) => {
   try {
     const count = await Testimonial.countDocuments();
     const rand = Math.floor(Math.random() * count);
-    const t = await Testimonial.findOne().skip(rand);
-    if (!t) res.status(404).json({ message: 'Not found' });
-    else res.json(t);
+    const randomTestimonial = await Testimonial.findOne().skip(rand);
+    if (!randomTestimonial) res.status(404).json({ message: 'Not found' });
+    else res.json(randomTestimonial);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -22,9 +22,9 @@ exports.getRandom = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const t = await Testimonial.findById(req.params.id);
-    if (!t) res.status(404).json({ message: 'Not found' });
-    else res.json(t);
+    const testimonialById = await Testimonial.findById(req.params.id);
+    if (!testimonialById) res.status(404).json({ message: 'Not found' });
+    else res.json(testimonialById);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -44,12 +44,12 @@ exports.post = async (req, res) => {
 exports.put = async (req, res) => {
   const { author, text } = req.body;
   try {
-    const dep = await Testimonial.findById(req.params.id);
-    if (dep) {
-      dep.author = author;
-      dep.text = text;
-      await dep.save();
-      res.json(dep);
+    const updateTestimonial = await Testimonial.findById(req.params.id);
+    if (updateTestimonial) {
+      updateTestimonial.author = author;
+      updateTestimonial.text = text;
+      await updateTestimonial.save();
+      res.json(updateTestimonial);
     } else res.status(404).json({ message: 'Not found...' });
   } catch (err) {
     res.status(500).json({ message: err });
