@@ -79,12 +79,12 @@ describe('GET /api/concerts', () => {
   });
 
   it('/price/day/:day should return array of concerts by day', async () => {
-    const res = await request(server).get('/api/concerts/price/day/1');
+    const res = await request(server).get('/api/concerts/day/1');
+    console.log(res.body);
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.an('array');
     expect(res.body).to.not.be.null;
   });
-
   after(async () => {
     await Concert.deleteMany();
   });

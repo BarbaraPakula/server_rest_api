@@ -12,6 +12,6 @@ router.route('/concerts/:id').put(ConcertController.put);
 router.route('/concerts/performer/:performer').get(ConcertController.getPerformer);
 router.route('/concerts/genre/:genre').get(ConcertController.getGenre);
 router.route('/concerts/price/:price_min/:price_max').get(ConcertController.getPrice);
-router.route('/concerts/price/day/:day').get(ConcertController.getDay);
+router.route('/concerts/day/:day').get(ConcertController.getDay);
 
 module.exports = router;
